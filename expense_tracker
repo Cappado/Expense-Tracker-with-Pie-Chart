@@ -1,0 +1,22 @@
+# expense_tracker.py
+
+import matplotlib.pyplot as plt
+
+def log_expense(category, amount):
+    with open("expenses.csv", "a") as file:
+        file.write(f"{category},{amount}\n")
+
+def generate_pie_chart():
+    categories = {}
+    with open("expenses.csv", "r") as file:
+        for line in file:
+            category, amount = line.strip().split(",")
+            categories[category] = categories.get(category, 0) + float(amount)
+    plt.pie(categories.values(), labels=categories.keys(), autopct='%1.1f%%')
+    plt.title("Expenses by Category")
+    plt.show()
+
+# Sample usage
+log_expense("Food", 20)
+log_expense("Transport", 10)
+generate_pie_chart()
